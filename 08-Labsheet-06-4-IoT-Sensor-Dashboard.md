@@ -91,33 +91,56 @@ xSemaphoreGive(mutex)           xSemaphoreGive(mutex)
 
 
 ---
+<img width="1640" height="2360" alt="830700118_1635866627924672_3100352940839620640_n" src="https://github.com/user-attachments/assets/b29ad0e2-8b11-4a56-99f4-f0eeee3b2cff" />
+
+<img width="1640" height="2360" alt="825311148_1802358030905467_4019267211573913350_n" src="https://github.com/user-attachments/assets/9931077b-3677-4da0-9e13-3381d18631fa" />
+
+<img width="1640" height="2360" alt="825311138_2177485926136264_273420656664057082_n" src="https://github.com/user-attachments/assets/8832dc22-e7ac-4edd-b8fe-5afadfb3e2c3" />
+
+<img width="1640" height="2360" alt="825311203_1134244292458724_6617973865829074358_n" src="https://github.com/user-attachments/assets/91c5e106-4b1c-4253-8291-1a609f80902b" />
 
 ## 7. ตารางบันทึกผลการทดลอง (Experiment Results)
 
 ### 7.1 บันทึกข้อมูลจาก Dashboard
 
+> **ตอบ:**
+
 | ครั้งที่ | Temperature (°C) | Humidity (%) | Light Lux | Timestamp (ms) |
-| :------: | :--------------: | :----------: | :-------: | :------------: |
-|  **1**   |                  |              |           |                |
-|  **2**   |                  |              |           |                |
-|  **3**   |                  |              |           |                |
+| :-: | :-: | :-: | :-: | :-: |
+| 1 | 34.7 | 52.8 | 669 | 473270 |
+| 2 | 26.7 | 62.8 | 573 | 506480 |
+| 3 | 27.1 | 68.9 | 229 | 509500 |
 
-### 7.2 ทดสอบ JSON API (`/api/data`)
+---
 
-บันทึก Raw JSON Response จาก Browser:
+### 7.2 ทดสอบ JSON API (/api/data)
+
+> **ตอบ:** บันทึก Raw JSON Response จาก Browser:
 
 ```json
-
-```
+{"temperature":30.00,"humidity":68.30,"light_lux":560,"timestamp_ms":575770}
 
 ---
 
 ## 8. คำถามท้ายการทดลอง (Post-Lab Questions)
 
-1. เหตุใดจึงต้องใช้ **Mutex** ในการป้องกันการเข้าถึงตัวแปร `g_latest_data` ร่วมกันระหว่าง `vNetworkTask` และ HTTP Handler? ถ้าไม่ใช้จะเกิดอะไรขึ้น?
-2. `esp_http_server` รัน Handler บน Thread ใด — เป็น Thread เดียวกับ FreeRTOS Task ของเราหรือไม่?
-3. การที่ Dashboard ใช้ `<meta http-equiv="refresh" content="2">` แทนที่จะใช้ JavaScript `fetch()` มีข้อดีและข้อเสียอย่างไร?
+### 1. เหตุใดจึงต้องใช้ Mutex ในการป้องกันการเข้าถึงตัวแปร `g_latest_data` ร่วมกันระหว่าง `vNetworkTask` และ HTTP Handler? ถ้าไม่ใช้จะเกิดอะไรขึ้น?
+> **ตอบ:** 
+- **ป้องกันข้อมูลตีกัน (Race Condition):** เนื่องจากฝั่งเขียนข้อมูล (`vNetworkTask`) และฝั่งอ่านข้อมูล (HTTP Handler) ทำงานพร้อมกันบนคนละ Thread ตัว Mutex จะช่วยคิวให้อ่านหรือเขียนทีละฝ่าย
+- **หากไม่ใช้:** ข้อมูลจะเกิด Data Corruption หรือได้ค่าขยะส่งกลับไปแสดงผลบนหน้าเว็บ
 
+---
+
+### 2. `esp_http_server` รัน Handler บน Thread ใด — เป็น Thread เดียวกับ FreeRTOS Task ของเราหรือไม่?
+> **ตอบ:** 
+- **คนละ Thread:** `esp_http_server` จะสร้าง Thread แยกของตัวเองชื่อ `httpd` เพื่อจัดการ HTTP Requests โดยเฉพาะ ไม่ได้รันบน Thread เดียวกับ `vNetworkTask` หรือ `vSensorTask`
+
+---
+
+### 3. การที่ Dashboard ใช้ `<meta http-equiv="refresh" content="2">` แทนที่จะใช้ JavaScript `fetch()` มีข้อดีและข้อเสียอย่างไร?
+> **ตอบ:**
+- **ข้อดี:** เขียนง่ายมาก ไม่ต้องเขียนโค้ด JavaScript ฝั่ง Client และประหยัดหน่วยความจำ Flash
+- **ข้อเสีย:** หน้าเว็บจะกะพริบทุกๆ 2 วินาทีเพราะต้องดึง HTML ใหม่ทั้งหมดทำให้กิน Bandwidth และ CPU ของ ESP32 มากกว่า
 ---
 
 ## 9. ความรู้เพิ่มเติม: ESP-IDF `esp_http_server` API
