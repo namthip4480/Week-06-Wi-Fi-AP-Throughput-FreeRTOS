@@ -179,6 +179,8 @@ void app_main(void) {
 
 ---
 
+<img width="1640" height="2360" alt="825311373_1071861315716593_477577270532952412_n" src="https://github.com/user-attachments/assets/e806dcc0-7760-449b-868f-8bf7b6cc1767" />
+
 ## 5. ตารางบันทึกผลการทดลอง (Experiment Results)
 
 ### 5.1 ตารางบันทึกการเช็กชื่อผ่าน RF Proximity
