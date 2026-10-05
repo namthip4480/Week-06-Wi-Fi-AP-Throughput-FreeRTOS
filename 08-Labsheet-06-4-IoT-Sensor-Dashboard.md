@@ -119,7 +119,7 @@ xSemaphoreGive(mutex)           xSemaphoreGive(mutex)
 
 ```json
 {"temperature":30.00,"humidity":68.30,"light_lux":560,"timestamp_ms":575770}
-
+```
 ---
 
 ## 8. คำถามท้ายการทดลอง (Post-Lab Questions)
