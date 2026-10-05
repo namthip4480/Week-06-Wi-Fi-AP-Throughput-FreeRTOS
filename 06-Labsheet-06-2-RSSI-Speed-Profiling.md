@@ -80,15 +80,15 @@ sequenceDiagram
 <img width="617" height="376" alt="image" src="https://github.com/user-attachments/assets/e384cb7b-65c9-42b0-bf61-21165474d6a7" />
 
 ### 2. เส้นแนวโน้ม (Logarithmic Regression Curve)
- > **ตอบ:** สมการแสดงความสัมพันธ์ระหว่างค่า RSSI ($x$) และ Throughput ($y$):
+สมการแสดงความสัมพันธ์ระหว่างค่า RSSI ($x$) และ Throughput ($y$):
 $$y = -4850.75 \cdot \ln(|x|) + 20119.15$$
 
 ### 3. การคำนวณค่า $R^2$ (Coefficient of Determination)
- > **ตอบ:** $$R^2 = 0.9990$$
+ $$R^2 = 0.9990$$
 * **การประเมินความแม่นยำ:** ค่า $R^2$ มีค่าเท่ากับ **0.9990** คิดเป็น 99.90% ซึ่งเข้าใกล้ 1.0 อย่างมาก แสดงว่าโมเดล Logarithmic Regression สามารถอธิบายความสัมพันธ์ระหว่างระดับสัญญาณ RSSI กับความเร็ว Throughput ได้อย่างแม่นยำสูงมาก
 
 ### 4. จุด Threshold RSSI (dBm) ที่ความเร็วลดลงมากกว่า 50%
- > **ตอบ:** * **ความเร็วสูงสุด (Max Throughput):** $2480.5 \text{ Kbps}$ (ที่ RSSI $-38 \text{ dBm}$)
+* **ความเร็วสูงสุด (Max Throughput):** $2480.5 \text{ Kbps}$ (ที่ RSSI $-38 \text{ dBm}$)
 * **ระดับความเร็ว 50%:** $\frac{2480.5}{2} = 1240.25 \text{ Kbps}$
 * **จุด Threshold RSSI:** จากการคำนวณผ่านสมการ Regression เมื่อความเร็วลดลงเหลือ $1240.25 \text{ Kbps}$ จะได้ค่าสัญญาณเกณฑ์สวิงอยู่ที่ประมาณ **$-49.3 \text{ dBm}$** หากสัญญาณ RSSI แย่กว่า $-49.3 \text{ dBm}$ ประสิทธิภาพความเร็วจะตกเกิน 50%
 ---
